@@ -34,9 +34,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Server
+gem 'thin'
 # Pretty logs
 gem 'colorize'
-
 # Use for exceptions via (sendgrid?)
 gem 'exception_notification', git: 'git://github.com/alanjds/exception_notification.git'
 
