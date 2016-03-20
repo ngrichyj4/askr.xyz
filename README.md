@@ -13,9 +13,9 @@ heroku git:remote -a askr-staging
 git remote -v
 
 ## To push to any code changes to heroku, do
-git add .
-git commit -m "..changes...."
-git push heroku
+* git add .
+* git commit -m "..changes...."
+* git push heroku
 
 ## App url, we can set main web url to point here using CNAME later.
 https://askr-staging.herokuapp.com
