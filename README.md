@@ -10,8 +10,8 @@
 ## Use Rails
 * cd /vagrant
 * bundle
-s
-# Getting started
+
+## Getting started
 
 ## Create heroku account
 Then, I'll need your email to add you as a collaborator on the instance.
