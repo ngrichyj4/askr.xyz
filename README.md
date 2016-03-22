@@ -1,3 +1,16 @@
+##  Setup rails-dev-box
+* Install Vagrant
+* Install Virtualbox
+* Clone askr.xyz on gitlab
+* Run "vagrant up"
+
+## Use vagrant
+* vagrant ssh
+
+## Use Rails
+* cd /vagrant
+* bundle
+s
 # Getting started
 
 ## Create heroku account
