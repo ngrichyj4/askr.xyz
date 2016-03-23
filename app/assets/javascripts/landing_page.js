@@ -1,9 +1,11 @@
 var Askr = Askr || {};
 Askr.LandingPage = (function() {
   function Init() {
-    $("#create-button").click(function() {
+    $("#start-poll").on('submit', function(e) {
       var slug = $("#slug").val();
       window.location = "/" + slug;
+      e.preventDefault();
+      return false;
     });
 
     $("#slug-check").click(function() {

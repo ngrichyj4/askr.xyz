@@ -1,5 +1,9 @@
 class PollsController < ApplicationController
   def landing
+    if params[:slug]
+      # /?slug=foobar ... the landing page redirects here on submit if JavaScript is disabled
+      redirect_to polls_path(params[:slug])
+    end
     @poll = Poll.new
   end
 

@@ -1,4 +1,7 @@
-<input id="slug" value='<%= @poll.slug %>'></input><button id="create-button">Start Poll</button>
+<form id='start-poll' method='get' action='/'>
+  <input type="text" id="slug" name="slug" value='<%= @poll.slug %>'></input>
+  <input type="submit" value="Start Poll"/>
+</form>
 <br/>
 <button id="slug-check">Check availability</button>
 <p>Slug is available: <span id="slug-is-available">true</span></p>
