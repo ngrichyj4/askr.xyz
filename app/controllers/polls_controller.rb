@@ -30,6 +30,10 @@ class PollsController < ApplicationController
     render template: 'polls/vote'
   end
 
+  def slug_is_available
+    render text: !poll_already_exists 
+  end
+
 private
   def poll_already_exists
     Poll.where(slug: params[:slug]).any?
