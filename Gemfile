@@ -44,6 +44,7 @@ gem 'exception_notification', git: 'git://github.com/alanjds/exception_notificat
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -56,5 +57,9 @@ group :development do
   # Nice to have, for local enviroment variables 
   # Useful inside vagrant
   gem 'dotenv-rails', :groups => [:development, :test]
+end
+
+group :test do
+  gem 'rspec-rails'
 end
 
