@@ -1,17 +1,20 @@
-##  Setup rails-dev-box
+# Dev environment
+## One-time: Setup rails-dev-box
 * Install Vagrant
 * Install Virtualbox
 * Clone askr.xyz on gitlab
-* Run "vagrant up"
+* Run `vagrant up`
 
-## Use vagrant
-* vagrant ssh
+## Every time: connect to vagrant box
+* `vagrant ssh`
 
-## Use Rails
-* cd /vagrant
-* bundle
+## Every time: setup and run Rails
+* `cd /vagrant`
+* `bundle`
+* `rake db:migrate`
+* `rails s`
 
-## Getting started
+# Deploying
 
 ## Create heroku account
 Then, I'll need your email to add you as a collaborator on the instance.
@@ -32,5 +35,3 @@ git remote -v
 
 ## App url, we can set main web url to point here using CNAME later.
 https://askr-staging.herokuapp.com
-
-## test edit
