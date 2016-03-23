@@ -1,0 +1,11 @@
+<%= @poll.slug %>
+<%= form_for @poll, method: :post do |f| %>
+  <%= hidden_field :poll, :slug %>
+  <br/><%= f.label :question %>
+  <br/><%= f.text_field :question %>
+  <br/><%= f.label :voting_style %>
+  <br/><%= f.collection_select :voting_style, Poll::ALL_VOTING_STYLES, :to_s, :titleize %>
+  <br/><%= f.submit 'Create' %>
+
+<% end %>
+
