@@ -1,4 +1,8 @@
 <input id="slug" value='<%= @poll.slug %>'></input><button id="create-button">Start Poll</button>
+<br/>
+<button id="slug-check">Check availability</button>
+<p>Slug is available: <span id="slug-is-available">true</span></p>
+<p>Slug is valid: <span id="slug-is-valid">true</span></p>
 <script>
 $(function() {
   Askr.LandingPage.Init();

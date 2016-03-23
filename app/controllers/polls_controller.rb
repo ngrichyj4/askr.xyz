@@ -34,6 +34,9 @@ class PollsController < ApplicationController
     render text: !poll_already_exists 
   end
 
+  def slug_is_valid
+    render text: Poll.new(slug: params[:slug]).valid?
+  end
 private
   def poll_already_exists
     Poll.where(slug: params[:slug]).any?
