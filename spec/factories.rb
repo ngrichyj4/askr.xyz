@@ -5,7 +5,5 @@
 
 FactoryGirl.define do
   factory :poll do
-    slug "poll_slug"
-    voting_style :choose_one
   end
 end

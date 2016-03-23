@@ -1,8 +1,64 @@
 require 'rails_helper.rb'
 
 describe Poll do
+  context "defaults" do
+    it "provides a random slug" do
+      allow(RandomWord.adjs).to receive(:next).and_return "fluorescent"
+      allow(RandomWord.nouns).to receive(:next).and_return "hippo"
+      new_poll = Poll.new
+      expect(new_poll.slug).to eq 'fluorescent-hippo'
+    end
+
+    it "tries again until a unique slug is found" do
+      allow(RandomWord.adjs).to receive(:next).and_return "fluorescent", "pastey", "good"
+      allow(RandomWord.nouns).to receive(:next).and_return "hippo", "spain", "bait"
+      Poll.create(slug: "fluorescent-hippo")
+      Poll.create(slug: "pastey-spain")
+      poll = Poll.new
+      expect(poll).to be_valid
+      expect(poll.slug).to eq "good-bait"
+    end
+
+    it "doesn't generate a random slug if it already has one" do
+      expect(RandomWord.adjs).to_not receive(:next)
+      expect(RandomWord.nouns).to_not receive(:next)
+      Poll.create slug: 'something-else'
+    end
+
+    it "doesn't try indefinitely if it can't find a unique value" do
+      expect(RandomWord.adjs).to receive(:next).and_return("intense").at_most(6).times
+      expect(RandomWord.nouns).to receive(:next).and_return("fruit").at_most(6).times
+      Poll.create slug: "intense-fruit"
+      new_poll = Poll.new
+    end
+
+    it "leaves the slug empty if it can't randomize a unique value" do
+      allow(RandomWord.adjs).to receive(:next).and_return("intense")
+      allow(RandomWord.nouns).to receive(:next).and_return("fruit")
+      Poll.create slug: "intense-fruit"
+      expect(Poll.new.slug).to be_nil
+    end
+
+    it "converts underscores in randomized words to hyphens" do
+      allow(RandomWord.adjs).to receive(:next).and_return("ultra_flavourful")
+      allow(RandomWord.nouns).to receive(:next).and_return("egg_salad")
+      expect(Poll.new.slug).to eq "ultra-flavourful-egg-salad"
+    end
+
+    it "does not override existing slug" do
+      poll = create :poll
+      fetched_poll = Poll.find poll.id
+      expect(fetched_poll.slug).to eq poll.slug
+    end
+  end
+
   context "validations" do
     let(:poll) { create :poll }
+    it "requires a unique slug" do
+      second_poll = Poll.new(slug: poll.slug)
+      expect(second_poll).to_not be_valid
+    end
+
     it "permits numbers, upper and lower characters, hyphens, and underscores in the slug" do
       poll.slug = '_-abcdefghijklmnopqrstuvwxyz'
       expect(poll).to be_valid
@@ -37,6 +93,11 @@ describe Poll do
 
     it "permits empty questions" do
       poll.question = ''
+      expect(poll).to be_valid
+    end
+
+    it "permits empty voting style" do
+      poll.voting_style = nil
       expect(poll).to be_valid
     end
 
