@@ -11,7 +11,7 @@
 ## Every time: setup and run Rails
 * `cd /vagrant`
 * `bundle`
-* `rake db:migrate`
+* `rake db:create rake db:migrate` the first time, only  `rake db:migrate` after.
 * `rails s`
 
 # Deploying
