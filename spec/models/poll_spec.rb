@@ -1,12 +1,24 @@
 require 'rails_helper.rb'
 
 describe Poll do
+  context "associations" do
+    it "has many poll_options as options" do
+      expect(build(:poll)).to have_many(:options)
+    end
+  end
+
   context "defaults" do
     it "provides a random slug" do
       allow(RandomWord.adjs).to receive(:next).and_return "fluorescent"
       allow(RandomWord.nouns).to receive(:next).and_return "hippo"
       new_poll = Poll.new
       expect(new_poll.slug).to eq 'fluorescent-hippo'
+    end
+
+    it "tries again if the slug is too long" do
+      allow(RandomWord.adjs).to receive(:next).and_return "123456789_123456789_123456789_", "shorter"
+      allow(RandomWord.nouns).to receive(:next).and_return "123456789_123456789_123456789_", "words"
+      expect(Poll.new.slug).to eq "shorter-words"
     end
 
     it "tries again until a unique slug is found" do
@@ -26,8 +38,8 @@ describe Poll do
     end
 
     it "doesn't try indefinitely if it can't find a unique value" do
-      expect(RandomWord.adjs).to receive(:next).and_return("intense").at_most(6).times
-      expect(RandomWord.nouns).to receive(:next).and_return("fruit").at_most(6).times
+      expect(RandomWord.adjs).to receive(:next).and_return("intense").at_most(11).times
+      expect(RandomWord.nouns).to receive(:next).and_return("fruit").at_most(11).times
       Poll.create slug: "intense-fruit"
       new_poll = Poll.new
     end

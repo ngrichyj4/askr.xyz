@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323012947) do
+ActiveRecord::Schema.define(version: 20160323060432) do
+
+  create_table "options", force: :cascade do |t|
+    t.string  "text",    limit: 255
+    t.integer "poll_id", limit: 4
+  end
 
   create_table "polls", force: :cascade do |t|
     t.string "slug",         limit: 255

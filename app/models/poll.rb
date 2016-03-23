@@ -1,10 +1,15 @@
 class Poll < ActiveRecord::Base
   ALL_VOTING_STYLES = %w(choose_one choose_any sort)
+  MAX_SLUG_LENGTH = 50
+
+  # Associations
+  ################
+  has_many :options
 
   # Validations
   ###############
   validates_format_of :slug, with: /\A[a-zA-Z0-9_-]+\Z/, message: "can only be alphanumeric"
-  validates :slug, length: { maximum: 50 }
+  validates :slug, length: { maximum: MAX_SLUG_LENGTH }
   validates_uniqueness_of :slug, message: "%{value} is already taken"
   validate :slug_does_not_end_with_whitespace # because validates_format_of ignores newlines at the end of the slug 
   validate :voting_style_in_permitted_list
@@ -31,7 +36,7 @@ class Poll < ActiveRecord::Base
       self.slug = random_slug 
       attempts = 0
       max_attempts = 5
-      while attempts < max_attempts && self.class.pluck(:slug).include?(self.slug)
+      while attempts < max_attempts && (self.class.pluck(:slug).include?(self.slug) || self.slug.length > MAX_SLUG_LENGTH)
         self.slug = random_slug
         attempts += 1
       end

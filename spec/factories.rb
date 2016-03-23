@@ -6,4 +6,7 @@
 FactoryGirl.define do
   factory :poll do
   end
+
+  factory :option do
+  end
 end
