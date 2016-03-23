@@ -5,6 +5,8 @@ class Poll < ActiveRecord::Base
   # Associations
   ################
   has_many :options
+  accepts_nested_attributes_for :options, 
+    reject_if: proc { |attributes| attributes['text'].blank? }
 
   # Validations
   ###############

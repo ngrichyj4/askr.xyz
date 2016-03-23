@@ -22,6 +22,7 @@ class PollsController < ApplicationController
 
   def new
     @poll = Poll.new slug: params[:slug]
+    10.times { @poll.options.build }
     render template: 'polls/new'
   end
 
@@ -47,6 +48,6 @@ private
   end
 
   def params_for_create
-    params.require(:poll).permit(:slug, :question, :voting_style)
+    params.require(:poll).permit(:slug, :question, :voting_style, options_attributes: [:text] )
   end
 end

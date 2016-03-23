@@ -2,8 +2,47 @@ require 'rails_helper.rb'
 
 describe Poll do
   context "associations" do
+    let(:poll) { build(:poll) }
     it "has many poll_options as options" do
-      expect(build(:poll)).to have_many(:options)
+      expect(poll).to have_many(:options)
+    end
+
+    it "accepts nested attributes for options" do
+      expect(poll).to accept_nested_attributes_for(:options)
+    end
+
+    it "allows you to create many options easily" do
+      options = {
+        slug: 'anything',
+        options_attributes: [
+          { text: 'first' },
+          { text: 'second' },
+          { text: 'third' }
+        ]
+      }
+      full_poll = Poll.create(options)
+      expect(full_poll.options.count).to eq 3
+      expect(full_poll.options.first.to_s).to eq 'first'
+    end
+
+    it "ignores options with emtpy text" do
+      options = {
+        slug: 'anything',
+        options_attributes: [
+          { text: '' },
+          { text: '' },
+          { text: 'third' }
+        ]
+      }
+      full_poll = Poll.create(options)
+      expect(full_poll.options.count).to eq 1
+    end
+
+    it "handles option creation with the input that the default client sends" do
+      options = {"slug"=>"drugged-uneducated-person", "question"=>"do you like eggs", "voting_style"=>"choose_one", "options_attributes"=>{"0"=>{"text"=>"first"}, "1"=>{"text"=>"second"}, "2"=>{"text"=>"third"}, "3"=>{"text"=>""}, "4"=>{"text"=>"fourth"}, "5"=>{"text"=>""}, "6"=>{"text"=>""}, "7"=>{"text"=>""}, "8"=>{"text"=>""}, "9"=>{"text"=>""}}}
+      full_poll = Poll.create(options)
+      expect(full_poll.options.count).to eq 4
+      expect(full_poll.options.map(&:to_s)).to eq %w(first second third fourth)
     end
   end
 

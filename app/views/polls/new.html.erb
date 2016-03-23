@@ -5,6 +5,13 @@
   <br/><%= f.text_field :question %>
   <br/><%= f.label :voting_style %>
   <br/><%= f.collection_select :voting_style, Poll::ALL_VOTING_STYLES, :to_s, :titleize %>
+  <br/><%= f.label :options %>
+  <ul>
+  <%= f.fields_for :options do |ff| %>
+    <li><%= ff.text_field :text %></li> 
+  <% end %>
+  </ul>
+
   <br/><%= f.submit 'Create' %>
 
 <% end %>
