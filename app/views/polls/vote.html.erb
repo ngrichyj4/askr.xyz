@@ -1,7 +1,48 @@
 <h1>Vote</h1>
 <h2><%= @poll.question %> (<%= @poll.voting_style.humanize.downcase %>)</h2>
-<ul>
-  <% @poll.options.each do |option| %>
-    <li><%= option %></li>
-  <% end %>
-</ul>
+<%= form_for @poll, url: {action: 'create_vote'}, method: :post do |f| %>
+	<ul>
+			<%-# <!-- Sorting --> -%>
+			<% if @poll.voting_style.to_sym == :sort %>
+				<!-- Use spans, order by preference, call drag drop plugin on div? -->
+				<!-- After sorting, onSubmit will need to collect spans by order and string to server (,) seperated -->
+				<!-- Scoring will take place in the backend -->
+				<div class="sort">
+						<% @poll.options_by_score.each do |option| %>
+							<br/><span score="<%= option.score %>" id="<%= option.id %>"><%= option.text %></span>
+						<% end %>
+
+						<!-- Example: TODO: move around, or change later -->
+						<script type="text/javascript">
+							 $(document).on("click","input[type=submit]",function(event) {
+							 		event.preventDefault();
+							 		var IDs = [];
+									$(".sort").find("span").each(function(){ IDs.push(this.id); });
+									$('<input>').attr({type: 'hidden',name: 'options', value: IDs.join()}).appendTo('form');
+									$('form').submit();
+						    });
+						</script>
+				</div>
+			<% else %>
+				<%-# <!-- Other options --> -%>
+				<% @poll.options.each do |option| %>
+					<% case @poll.voting_style.to_sym %>
+					<% when :choose_one %>
+						<%-# <!-- Radio button for single option votes --> -%>
+			    	<li>
+			    		<%= f.radio_button :id, option.id %>
+			    		<%= f.label :id, option.text %>
+			    	</li>
+					<% when :choose_any %>
+						<%-# <!-- Checkboxes button for single option votes --> -%>
+			    	<li>
+			    		<%= f.check_box :id, {multiple: true}, option.id, nil %>
+			    		<%= f.label :id, option.text %>
+			    	</li>
+					<% end %>
+				<% end %>
+			<% end %>
+	</ul>
+	<br/><%= f.submit 'Vote' %>
+	<br/><%= link_to "View results", "#{@poll.slug}/results" %>
+<% end %>

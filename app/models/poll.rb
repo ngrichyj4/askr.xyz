@@ -1,4 +1,5 @@
 class Poll < ActiveRecord::Base
+  attr_accessor :params
   ALL_VOTING_STYLES = %w(choose_one choose_any sort)
   MAX_SLUG_LENGTH = 50
 
@@ -27,6 +28,41 @@ class Poll < ActiveRecord::Base
 
   def slug_does_not_end_with_whitespace
     errors.add(:slug, "can only be alphanumeric") if slug && slug[-1] =~ /\W/
+  end
+
+  # Return sorted options by score
+  def options_by_score
+    self.options.sort{ |x, y| y.score <=> x.score }
+  end
+
+  # Return uniq number of voters
+  def uniq_voters
+    self.options.includes(:votes).pluck(:session_id).compact.uniq.length
+  end
+
+  # Score options in order
+  def save_votes_with_score
+    options_with_score = build_score_to_hash(self.params[:options].split(","))
+    options_with_score.map {|id, score| 
+      option = self.options.find_by(id: id)
+      option.votes.create(score: score, session_id: self.params[:session_id])
+    }
+  end
+
+  def save_votes
+    vote_ids = self.params[:poll]
+    vote_ids.map {|name, ids|
+      ids.split.flatten.each do |id|
+        option = self.options.find_by(id: id)
+        option.votes.create(session_id: self.params[:session_id])
+      end
+    }
+  end
+
+  # Number of options -> max score, apply in descending order
+  # [option_3, option_1, option_2] -> {option_3 => 3, option_1 => 2, option_2 => 1}
+  def build_score_to_hash(options)
+    score = 0; options.reverse.inject(Hash.new(0)) {|hash,id| hash[id] = (score+=1); hash }
   end
 
   # Defaults

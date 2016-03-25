@@ -40,6 +40,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'thin'
 # Pretty logs
 gem 'colorize'
+gem 'awesome_print'
 # Use for exceptions via (sendgrid?)
 gem 'exception_notification', git: 'git://github.com/alanjds/exception_notification.git'
 

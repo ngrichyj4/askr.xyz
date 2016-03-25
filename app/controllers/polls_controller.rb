@@ -1,4 +1,6 @@
 class PollsController < ApplicationController
+  before_filter :load_poll!, :only => [:create_vote, :results, :show, :vote, :router]
+
   def landing
     if params[:slug]
       # /?slug=foobar ... the landing page redirects here on submit if JavaScript is disabled
@@ -15,7 +17,7 @@ class PollsController < ApplicationController
   def router
     if poll_already_exists 
       if user_already_voted
-        # TODO: view results
+        show
       else
         vote
       end
@@ -30,8 +32,25 @@ class PollsController < ApplicationController
     render template: 'polls/new'
   end
 
+  def create_vote
+    if params[:poll]
+      @poll.params = params.merge({session_id: create_or_return_uniq_id})
+      @poll.voting_style.to_sym == :sort ? @poll.save_votes_with_score : @poll.save_votes
+      session[params[:slug]] = true if !@poll.errors.any?
+    end
+    redirect_to polls_url
+  end
+
+  # Don't require voting to show results
+  def results
+    show
+  end
+
+  def show
+   render template: 'polls/results' 
+  end
+
   def vote
-    @poll = Poll.find_by_slug params[:slug]
     render template: 'polls/vote'
   end
 
@@ -48,7 +67,7 @@ private
   end
 
   def user_already_voted
-    false # TODO - do something session-ey for this?
+    session[params[:slug]]
   end
 
   def params_for_create
