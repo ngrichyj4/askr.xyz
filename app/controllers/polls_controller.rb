@@ -33,7 +33,7 @@ class PollsController < ApplicationController
   end
 
   def create_vote
-    if params[:poll]
+    if params[:poll] || params[:options]
       @poll.params = params.merge({session_id: create_or_return_uniq_id})
       @poll.voting_style.to_sym == :sort ? @poll.save_votes_with_score : @poll.save_votes
       session[params[:slug]] = true if !@poll.errors.any?
