@@ -1,18 +1,18 @@
 <h1>Results</h1>
 <h2><%= @poll.question %> (<%= @poll.voting_style.humanize.downcase %>)</h2>
 <ul>
-	<% if @poll.voting_style.to_sym == :sort %>
-		<% @poll.options_by_score.each do |option| %>
-	    <li>
-	    	<%= "Score (#{option.score}) #{option.votes.length} votes #{option.text}" %>
-	    </li>
-	  <% end %>
-	<% else %>
-		<% @poll.options.each do |option| %>
-	    <li>
-	    	<%= "#{option.votes.length} votes #{option.text}" %>
-	    </li>
-	  <% end %>
-	<% end %>
+  <% if @poll.voting_style.to_sym == :sort %>
+    <% @poll.options_by_score.each do |option| %>
+      <li>
+        <%= "Score (#{option.score}) #{option.votes.length} votes #{option.text}" %>
+      </li>
+    <% end %>
+  <% else %>
+    <% @poll.options.each do |option| %>
+      <li>
+        <%= "#{option.votes.length} votes #{option.text}" %>
+      </li>
+    <% end %>
+  <% end %>
 </ul>
 <span><%= uniq_voters %></span>

@@ -4,10 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def create_or_return_uniq_id
-  	session[:session_id] ||= SecureRandom.base64(10)
+    session[:session_id] ||= SecureRandom.base64(10)
   end
 
   def load_poll!
-  	@poll ||= Poll.find_by_slug params[:slug] 
+    @poll ||= Poll.find_by_slug params[:slug] 
   end
 end
