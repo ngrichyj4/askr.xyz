@@ -21,3 +21,5 @@
 
 #rubymine folder
 /.idea
+
+/config/database.yml
