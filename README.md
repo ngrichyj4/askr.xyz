@@ -2,7 +2,7 @@
 ## One-time: Setup rails-dev-box
 * Install Vagrant
 * Install Virtualbox
-* Clone askr.xyz on gitlab
+* Clone askr.xyz on github: https://github.com/ngrichyj4/askr.xyz.git
 * Run `vagrant up`
 
 ## Every time: connect to vagrant box
