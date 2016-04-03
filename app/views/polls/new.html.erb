@@ -2,17 +2,36 @@
 <%= form_for @poll, method: :post do |f| %>
   <%= hidden_field :poll, :slug %>
   <br/><%= f.label :question %>
-  <br/><%= f.text_field :question %>
+  <br/><%= f.text_field :question, :class => 'form-control'%>
   <br/><%= f.label :voting_style %>
-  <br/><%= f.collection_select :voting_style, Poll::ALL_VOTING_STYLES, :to_s, :titleize %>
+  <br/><%= f.collection_select :voting_style, Poll::ALL_VOTING_STYLES, :to_s, :titleize, {}, {:class => 'form-control'}%>
   <br/><%= f.label :options %>
   <ul>
   <%= f.fields_for :options do |ff| %>
-    <li><%= ff.text_field :text %></li> 
+    <li>
+      <span class="input-group">
+        <%= ff.text_field :text, :class => 'form-control' %>
+        <span class="input-group-btn">
+          <button class="btn btn-danger deleteButton" id="<%= ff.index %>">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </span>
+      </span>
+    </li>
   <% end %>
+    <li>
+      <div class="btn btn-success" id="addOptionBtn">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </div>
+    </li>
   </ul>
 
   <br/><%= f.submit 'Create' %>
 
 <% end %>
+<script>
+  $(function() {
+    Askr.NewPage.Init();
+  });
+</script>
 
