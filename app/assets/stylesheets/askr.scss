@@ -15,8 +15,12 @@ li {
   width: 100%;
 }
 
-.error_field {
-  visibility: hidden;
+#question_error_message{
+  display: none;
+}
+
+#option_error_message {
+  display: none;
 }
 
 @font-face {

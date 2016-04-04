@@ -1,8 +1,8 @@
-<%= @poll.slug %>
 <%= form_for @poll, method: :post do |f| %>
   <%= hidden_field :poll, :slug %>
   <br/><%= f.label :question %>
   <br/><%= f.text_field :question, :class => 'form-control'%>
+
   <br/><%= f.label :voting_style %>
   <br/><%= f.collection_select :voting_style, Poll::ALL_VOTING_STYLES, :to_s, :titleize, {}, {:class => 'form-control'}%>
   <br/><%= f.label :options %>
@@ -27,6 +27,14 @@
   </ul>
 
   <br/><%= f.submit 'Create Poll', :class => 'form-control'%>
+  <br/><div id="question_error_message" class="well-sm alert-danger">
+    <span class="glyphicon glyphicon-alert"></span>
+    Please enter a question!
+  </div>
+  <div id="option_error_message" class="well-sm alert-danger">
+    <span class="glyphicon glyphicon-alert"></span>
+    Please enter at least two options!
+  </div>
 
 <% end %>
 <script>

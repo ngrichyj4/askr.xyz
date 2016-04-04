@@ -7,7 +7,7 @@ Askr.NewPage = (function () {
         console.log("Deleting element " + buttonId);
     }
 
-    var elementCounter = 10;
+    var elementCounter = 1;
     // Add option button
     function AddOptionClick() {
         // implement addint option here
@@ -23,6 +23,7 @@ Askr.NewPage = (function () {
         $( '<input type="text"></input>')
             .attr("name", "poll[options_attributes][" + elementCounter + "][text]")
             .attr("class", "form-control")
+            .attr("id", "poll_options_attributes_" +elementCounter+"_text")
             .appendTo($( '#option_span_'+elementCounter ));
 
         $( '<span type="text"></span>')
@@ -41,15 +42,36 @@ Askr.NewPage = (function () {
     }
 
     // validate form input
-    function ValidateQuestionForm() {
-        // implement form validation
-        console.log("Validating input");
-        //if ($( '#poll_question' ).text() == '') {
-        //    poll question text is empty
-        //    console.log("Missing poll question!");
-        //    return false;
-        //}
+    function ValidateQuestionField()
+    {
+        $( '#question_error_message' ).hide();
+        if ($( '#poll_question' ).val() == '') {
+            // poll question text is empty
+            //console.log("Missing poll question!");
+            $( '#question_error_message' ).show();
+            return false;
+        }
         return true;
+    }
+
+    function ValidateOptionFields()
+    {
+        $( '#option_error_message' ).hide();
+
+        if ($( 'input[id^="poll_options_attributes_"]' )
+                .filter(function() { return $(this).val(); }).length <= 1) {
+            // all options are empty
+            console.log()
+            $( '#option_error_message' ).show();
+            return false;
+        }
+        return true;
+    }
+
+    function ValidateQuestionForm() {
+        // check question fields
+        return ValidateQuestionField()
+            && ValidateOptionFields();
     }
 
     function InitDeletes() {
@@ -80,6 +102,9 @@ Askr.NewPage = (function () {
             }
         });
 
+        $( '#poll_question' ).blur(function () {
+            ValidateQuestionField();
+        });
     }
 
     return {
