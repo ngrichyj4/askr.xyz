@@ -8,7 +8,7 @@
   <br/><%= f.label :options %>
   <ul>
   <%= f.fields_for :options do |ff| %>
-    <li>
+    <li id="option_row_<%= ff.index %>">
       <span class="input-group">
         <%= ff.text_field :text, :class => 'form-control' %>
         <span class="input-group-btn">
@@ -19,14 +19,14 @@
       </span>
     </li>
   <% end %>
-    <li>
+    <li id="add_option_li">
       <div class="btn btn-success" id="addOptionBtn">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </div>
     </li>
   </ul>
 
-  <br/><%= f.submit 'Create' %>
+  <br/><%= f.submit 'Create Poll', :class => 'form-control'%>
 
 <% end %>
 <script>
