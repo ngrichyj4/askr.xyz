@@ -12,7 +12,7 @@
           <thead>
             <tr>
               <th>Voting Option</th>
-              <th>Votes</th>
+              <th>Score</th>
             </tr>
           </thead>
           <tbody>
@@ -28,7 +28,7 @@
               return color;
             }
           </script>
-          
+
           <% if @poll.voting_style.to_sym == :sort %>
             <% @poll.options_by_score.each do |option| %>
             <script>
