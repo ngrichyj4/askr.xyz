@@ -2,7 +2,7 @@
 ## One-time: Setup rails-dev-box
 * Install Vagrant
 * Install Virtualbox
-* Clone askr.xyz on gitlab
+* Clone askr.xyz on github: https://github.com/ngrichyj4/askr.xyz.git
 * Run `vagrant up`
 
 ## Every time: connect to vagrant box
@@ -35,3 +35,5 @@ git remote -v
 
 ## App url, we can set main web url to point here using CNAME later.
 https://askr-staging.herokuapp.com
+
+# Comment for testing branch merging
