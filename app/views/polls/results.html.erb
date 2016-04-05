@@ -32,11 +32,11 @@
           <% if @poll.voting_style.to_sym == :sort %>
             <% @poll.options_by_score.each do |option| %>
             <script>
-              votes_data.push(new Object({value: '<%= option.votes.length %>', label: '<%= option.text %>', color: getRandomColor()}));
+              votes_data.push(new Object({value: '<%= option.score %>', label: '<%= option.text %>', color: getRandomColor()}));
             </script>
               <tr>
                 <td><%= option.text %></td>
-                <td><%= option.votes.length %></td>
+                <td><%= option.score %></td>
               </tr>
             <% end %>
           <% else %>
