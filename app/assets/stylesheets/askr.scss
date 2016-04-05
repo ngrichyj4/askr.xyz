@@ -1,3 +1,52 @@
 .container {
-  width: 900px;
+  max-width: 900px;
+}
+
+#vote {
+  margin-bottom: 4em;
+  text-align: center;
+
+  .center {
+    margin: 0 auto;
+    float: none;
+  }
+
+  ul {
+    margin: 2em 0 2em 0;
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
+    margin: 0.9em 0 0.9em 0;
+
+    border-radius: 5px;
+    border: 1px solid #D4D5D5;
+    padding: 20px;
+    font-size: 1.4em;
+    font-weight: bold;
+
+    img {
+      float: left;
+      width: 20px;
+      margin-right: 20px;
+    }
+  }
+
+  .sortable-chosen {
+    background: #D4D5D5;
+  }
+
+  .vote {
+    margin: 2em 0 2em 0;
+  }
+
+  .view-results {
+    margin: 2em 0 0 0;
+
+    a {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+  }
 }
