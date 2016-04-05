@@ -86,8 +86,8 @@ class Poll < ActiveRecord::Base
 
   private
   def random_slug
-    slug = "#{RandomWord.adjs.next}-#{RandomWord.nouns.next}"
-    slug.gsub!("_", "-")
+    slug = "#{RandomWord.adjs.next.titleize}#{RandomWord.nouns.next.titleize}"
+    slug.gsub!(" ", "")
     slug
   end
 end

@@ -28,7 +28,7 @@ class PollsController < ApplicationController
 
   def new
     @poll = Poll.new slug: params[:slug]
-    10.times { @poll.options.build }
+    1.times { @poll.options.build }
     render template: 'polls/new'
   end
 
