@@ -3,7 +3,12 @@
 <head>
   <title>Askr.xyz - make a poll in seconds</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+  <meta property="og:url"           content="<%= request.original_url %>" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="Askr.xyz" />
+	<meta property="og:description"   content="Get answers in seconds. Askr lets you create short sharable polls in seconds." />
+	<meta property="og:image"         content="<%= request.base_url %><%= image_path 'small_bg.jpg' %>" />
+  
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>

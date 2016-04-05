@@ -4,14 +4,12 @@ Askr.NewPage = (function () {
     // Delete element function
     function DeleteElementClick(buttonId) {
         $( '#option_row_'+buttonId ).remove();
-        console.log("Deleting element " + buttonId);
     }
 
     var elementCounter = 1;
     // Add option button
     function AddOptionClick() {
         // implement addint option here
-        console.log("Adding "+ elementCounter + "th option.");
         $( '#add_option_li' ).before(
             "<li id='option_row_" + elementCounter + "'></li>"
         );
@@ -61,7 +59,6 @@ Askr.NewPage = (function () {
         if ($( 'input[id^="poll_options_attributes_"]' )
                 .filter(function() { return $(this).val(); }).length <= 1) {
             // all options are empty
-            console.log()
             $( '#option_error_message' ).show();
             return false;
         }
