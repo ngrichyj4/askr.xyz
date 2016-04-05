@@ -1,48 +1,75 @@
-<h1>Vote</h1>
-<h2><%= @poll.question %> (<%= @poll.voting_style.humanize.downcase %>)</h2>
-<%= form_for @poll, url: {action: 'create_vote'}, method: :post do |f| %>
-  <ul>
-      <%-# <!-- Sorting --> -%>
-      <% if @poll.voting_style.to_sym == :sort %>
-        <!-- Use spans, order by preference, call drag drop plugin on div? -->
-        <!-- After sorting, onSubmit will need to collect spans by order and string to server (,) seperated -->
-        <!-- Scoring will take place in the backend -->
-        <div class="sort">
+<div id="vote">
+  <h1><i><%= @poll.question %></i></h1>
+  <%= form_for @poll, url: {action: 'create_vote'}, method: :post do |f| %>
+    <%-# <!-- Sorting --> -%>
+    <% if @poll.voting_style.to_sym == :sort %>
+      <!-- Use spans, order by preference, call drag drop plugin on div? -->
+      <!-- After sorting, onSubmit will need to collect spans by order and string to server (,) seperated -->
+      <!-- Scoring will take place in the backend -->
+      <div class="row">
+        <div class="center col-md-6 col-xs-12">
+          <ul id="sortable">
             <% @poll.options_by_score.each do |option| %>
-              <br/><span score="<%= option.score %>" id="<%= option.id %>"><%= option.text %></span>
+              <li score="<%= option.score %>" id="<%= option.id %>">
+                <div class="option">
+                  <%= image_tag 'dots.svg' %>
+                  <%= option.text %>
+                </div>
+              </li>
             <% end %>
-
-            <!-- Example: TODO: move around, or change later -->
-            <script type="text/javascript">
-               $(document).on("click","input[type=submit]",function(event) {
-                  event.preventDefault();
-                  var IDs = [];
-                  $(".sort").find("span").each(function(){ IDs.push(this.id); });
-                  $('<input>').attr({type: 'hidden',name: 'options', value: IDs.join()}).appendTo('form');
-                  $('form').submit();
-                });
-            </script>
+          </ul>
         </div>
-      <% else %>
-        <%-# <!-- Other options --> -%>
-        <% @poll.options.each do |option| %>
-          <% case @poll.voting_style.to_sym %>
-          <% when :choose_one %>
-            <%-# <!-- Radio button for single option votes --> -%>
-            <li>
-              <%= f.radio_button :id, option.id %>
-              <%= f.label :id, option.text %>
-            </li>
-          <% when :choose_any %>
-            <%-# <!-- Checkboxes button for single option votes --> -%>
-            <li>
-              <%= f.check_box :id, {multiple: true}, option.id, nil %>
-              <%= f.label :id, option.text %>
-            </li>
-          <% end %>
-        <% end %>
-      <% end %>
-  </ul>
-  <br/><%= f.submit 'Vote' %>
-  <br/><%= link_to "View results", "#{@poll.slug}/results" %>
-<% end %>
+      </div>    
+
+        <script type="text/javascript">
+           $(document).on("click","input[type=submit]",function(event) {
+              event.preventDefault();
+              var IDs = [];
+              $("#sortable").find("li").each(function(){ IDs.push(this.id); });
+              $('<input>').attr({type: 'hidden',name: 'options', value: IDs.join()}).appendTo('form');
+              $('form').submit();
+            });
+        </script>
+
+          <script type="text/javascript">
+            var el = document.getElementById('sortable');
+            var sortable = Sortable.create(el);
+          </script>
+    <% else %>
+      <%-# <!-- Other options --> -%>
+      <div class="row">
+        <div class="center col-md-6">
+          <ul id="chose_one">
+            <% @poll.options.each do |option| %>
+              <% case @poll.voting_style.to_sym %>
+              <% when :choose_one %>
+                    <%-# <!-- Radio button for single option votes --> -%>
+                    <li>
+                      <%= f.radio_button :id, option.id %>
+                      <%= f.label :id, option.text %>
+                    </li>
+              <% when :choose_any %>
+                <%-# <!-- Checkboxes button for single option votes --> -%>
+                <li>
+                  <%= f.check_box :id, {multiple: true}, option.id, nil %>
+                  <%= f.label :id, option.text %>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+    
+    <div class="row vote">
+      <div class="col-sm-12">
+        <%= f.submit 'Cast Your Vote', class: 'btn btn-success btn-lg' %>        
+      </div>
+    </div>
+    <div class="row view-results">
+      <div class="col-sm-12">
+        <%= link_to "View results", "#{@poll.slug}/results", class: 'view-results' %>
+      </div>
+    </div>
+  <% end %>
+</div>
