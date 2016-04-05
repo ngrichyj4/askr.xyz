@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Askr.xyz is the shit</title>
-  
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-
+  <title>Askr.xyz - make a poll in seconds</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-static-top">
   <div class="container">
     <div class="navbar-header">
       <%= link_to 'Askr.xyz', root_path, class: 'navbar-brand' %>
@@ -26,8 +23,14 @@
 </div>
 
 <div class="footer">
-  Askr.xyz
+  <p>
+    &copy; 2016 <%= link_to 'Askr.xyz', root_path %>. Photo By <%= link_to 'Brett Florence', 'https://www.flickr.com/photos/bg_flo/8588051911/in/photolist-e5U1Cx-LrA7f-eHPWaN-vFTVqK-p6zEDf-bGM3ca-3X98WP-pQLVtF-A7sCE-92Xcuw-6JQ7NL-a6uii5-gFVuuR-7WTxKB-DxCtu-6yRav6-7pZpeG-5B8qFW-igXn-dxHJyw-dZEBze-BKBdwB-4oBLRA-3qsyKY-ys73k-9d5np2-5BggPx-aekyMV-6fAmB9-4oHyjH-4HKdsi-bNnuFx-dAu7mi-q3FRri-aAFNMf-CvbwEY-86NQCP-e3FCpi-9JGvdG-tnd67-fbGRRT-9Ter5V-5Vx6dm-qp5cF-b9moEF-8Z61LN-w7xEZp-pbmkcY-nyEQGu-fk2ssn' %>
+  </p>
 </div>
+
+<script type="text/javascript">
+  $.backstretch("<%= image_path 'bg.jpg' %>");
+</script>
 
 </body>
 </html>

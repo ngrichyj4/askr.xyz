@@ -1,22 +1,38 @@
-<form id='start-poll' method='get' action='/'>
-<div class="row">
-  <div class="col-lg-6">
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon3">askr.xyz/</span>
-      <input type="text" class="form-control" aria-describedby="basic-addon2" id="slug" name="slug" value='<%= @poll.slug %>'></input>
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-default">Start Poll</button>
-      </span>
+<div id="landing" class="row">
+  <div class="center col-md-6 col-xs-12 cover">
+    <h2>Get answers in seconds.</h2>
+    <p>
+      Askr lets you create short sharable polls in seconds.
+    </p>
+    <form id='start-poll' method='get' action='/'>
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="form-group has-feedback">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">askr.xyz/</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon2" id="slug" name="slug" value='<%= @poll.slug %>'></input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <input type="submit" name="commit" value="Start a New Poll" class="btn btn-success btn-lg">
+          </div>
+        </div>
+      </div>
     </div>
+    </form>
+
+    <br/>
+<!--
+    <button id="slug-check">Check availability</button>
+    <p>Slug is available: <span id="slug-is-available">true</span></p>
+    <p>Slug is valid: <span id="slug-is-valid">true</span></p>
+-->
   </div>
 </div>
-</form>
 
-<br/>
 
-<button id="slug-check">Check availability</button>
-<p>Slug is available: <span id="slug-is-available">true</span></p>
-<p>Slug is valid: <span id="slug-is-valid">true</span></p>
 <script>
 $(function() {
   Askr.LandingPage.Init();

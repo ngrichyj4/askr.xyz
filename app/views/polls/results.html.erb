@@ -1,18 +1,67 @@
-<h1>Results</h1>
-<h2><%= @poll.question %> (<%= @poll.voting_style.humanize.downcase %>)</h2>
-<ul>
-  <% if @poll.voting_style.to_sym == :sort %>
-    <% @poll.options_by_score.each do |option| %>
-      <li>
-        <%= "Score (#{option.score}) #{option.votes.length} votes #{option.text}" %>
-      </li>
-    <% end %>
-  <% else %>
-    <% @poll.options.each do |option| %>
-      <li>
-        <%= "#{option.votes.length} votes #{option.text}" %>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
-<span><%= uniq_voters %></span>
+<div id="results" class="row">
+  <div class="center col-md-12 col-xs-12 cover">
+    <h1>Results for <i><%= @poll.question %></i></h1>
+
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="votes" width="300" height="300"></canvas>
+      </div>
+
+      <div class="col-md-6">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Voting Option</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody>
+          <script>
+            var votes_data = [];
+
+            function getRandomColor() {
+              var letters = '0123456789ABCDEF'.split('');
+              var color = '#';
+              for (var i = 0; i < 6; i++ ) {
+                  color += letters[Math.floor(Math.random() * 16)];
+              }
+              return color;
+            }
+          </script>
+          
+          <% if @poll.voting_style.to_sym == :sort %>
+            <% @poll.options_by_score.each do |option| %>
+            <script>
+              votes_data.push(new Object({value: '<%= option.votes.length %>', label: '<%= option.text %>', color: getRandomColor()}));
+            </script>
+              <tr>
+                <td><%= option.text %></td>
+                <td><%= option.votes.length %></td>
+              </tr>
+            <% end %>
+          <% else %>
+            <% @poll.options.each do |option| %>
+            <script>
+              votes_data.push(new Object({value: '<%= option.votes.length %>', label: '<%= option.text %>', color: getRandomColor()}));
+            </script>
+              <tr>
+                <td><%= option.text %></td>
+                <td><%= option.votes.length %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+
+      <p class="tx-center mtl"><strong><%= uniq_voters %></strong></p>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var context = document.getElementById('votes').getContext('2d');
+  var skillsChart = new Chart(context).Doughnut(votes_data);
+</script>

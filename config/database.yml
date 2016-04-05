@@ -12,8 +12,8 @@ default: &default
   pool: 5
   adapter: mysql2
   username: root
-  password: root
-  host: localhost
+  password: password
+  host: 10.19.17.12
   encoding: utf8
   reconnect: false
 
