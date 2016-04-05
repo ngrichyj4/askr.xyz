@@ -1,4 +1,6 @@
 <script src="//cdn.jsdelivr.net/sortable/latest/Sortable.min.js"></script>
+<script src="//cdn.jsdelivr.net/clipboard.js/1.5.8/clipboard.min.js"></script>
+
 <div id="vote" class="row">
   <div class="center col-md-6 col-xs-12 cover">
     <h1><i><%= @poll.question %></i></h1>
@@ -85,9 +87,19 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-sm-12 share-btn">
+    <button class="btn share btn-primary" data-clipboard-text="http://askr.xyz<%= polls_path @poll.slug %>">
+      <span class="glyphicon glyphicon-share"></span>
+      Share Poll with Your Friends!
+    </button>  </div>
+</div>
+
 <script>
   $('.chose_one label').click(function() {
     $('li').removeClass('selected');
     $(this).children().first().addClass('selected');
   });
+
+  new Clipboard('.share');
 </script>

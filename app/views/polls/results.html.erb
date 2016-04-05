@@ -1,3 +1,5 @@
+<script src="//cdn.jsdelivr.net/clipboard.js/1.5.8/clipboard.min.js"></script>
+
 <div id="results" class="row">
   <div class="center col-md-12 col-xs-12 cover">
     <h1>Results for <i><%= @poll.question %></i></h1>
@@ -61,7 +63,18 @@
   </div>
 </div>
 
+<div class="row mtl">
+  <div class="col-sm-12 share-btn">
+    <button class="btn share btn-primary" data-clipboard-text="http://askr.xyz<%= polls_path @poll.slug %>">
+      <span class="glyphicon glyphicon-share"></span>
+      Share Poll with Your Friends!
+    </button>  </div>
+</div>
+
+
 <script>
   var context = document.getElementById('votes').getContext('2d');
   var skillsChart = new Chart(context).Doughnut(votes_data);
+
+  new Clipboard('.share');
 </script>
