@@ -1,8 +1,19 @@
 <form id='start-poll' method='get' action='/'>
-  <input type="text" id="slug" name="slug" value='<%= @poll.slug %>'></input>
-  <input type="submit" value="Start Poll"/>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon3">askr.xyz/</span>
+      <input type="text" class="form-control" aria-describedby="basic-addon2" id="slug" name="slug" value='<%= @poll.slug %>'></input>
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default">Start Poll</button>
+      </span>
+    </div>
+  </div>
+</div>
 </form>
+
 <br/>
+
 <button id="slug-check">Check availability</button>
 <p>Slug is available: <span id="slug-is-available">true</span></p>
 <p>Slug is valid: <span id="slug-is-valid">true</span></p>
